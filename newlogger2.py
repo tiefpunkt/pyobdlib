@@ -10,6 +10,8 @@ from obd.utils import scan_serial
 PORTNAME = "COM8"
 LOG_SENSORS = ["rpm", "speed", "throttle_pos", "load", "temp"]
 
+sensor_idxs = []
+
 conn = sqlite3.connect('obdlog.db')
 
 try:
@@ -25,6 +27,13 @@ try:
         port.close()
         port = None
         raise Exception("Cannot connect to %s" % PORTNAME)
+		
+    for xx in LOG_SENSORS:
+        for index, e in enumerate(obd.sensors.SENSORS):
+            if(xx == e.shortname):
+                sensor_idxs.append(index)
+                print "Logging item: "+e.name
+                break
         
     # Logging
     print "Logging started"
@@ -34,7 +43,7 @@ try:
         
         results = {}
         results["timestamp"] = str(now_utc)
-        for index in LOG_SENSORS:
+        for index in sensor_idxs:
             (name, value, unit) = port.sensor(index)
             results[obd.sensors.SENSORS[index].shortname] = value;
 
