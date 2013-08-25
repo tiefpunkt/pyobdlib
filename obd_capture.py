@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import obd_io
+import obd.io
 import serial
 import platform
-import obd_sensors
+import obd.sensors
 from datetime import datetime
 import time
 
-from obd_utils import scanSerial
+from obd.utils import scanSerial
 
 class OBD_Capture():
     def __init__(self):
@@ -18,7 +18,7 @@ class OBD_Capture():
         portnames = scanSerial()
         print portnames
         for port in portnames:
-            self.port = obd_io.OBDPort(port, None, 2, 2)
+            self.port = obd.io.OBDPort(port, None, 2, 2)
             if(self.port.State == 0):
                 self.port.close()
                 self.port = None

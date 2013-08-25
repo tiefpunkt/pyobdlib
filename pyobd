@@ -26,7 +26,7 @@
 #import wxversion
 #wxversion.select("2.6")
 import wx
-    
+
 import obd_io #OBD2 funcs
 import os #os.environ
 
