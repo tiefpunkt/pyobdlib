@@ -28,9 +28,7 @@ import time
 from math import ceil
 from datetime import datetime
 
-import obd_sensors
-
-from obd_sensors import hex_to_int
+from .sensors import hex_to_int, SENSORS
 
 GET_DTC_COMMAND   = "03"
 CLEAR_DTC_COMMAND = "04"
@@ -47,7 +45,7 @@ def decrypt_dtc_code(code):
         if len(current)<4:
             raise "Tried to decode bad DTC: %s" % code
 
-        tc = obd_sensors.hex_to_int(current[0]) #typecode
+        tc = fhex_to_int(current[0]) #typecode
         tc = tc >> 2
         if   tc == 0:
             type = "P"
@@ -60,10 +58,10 @@ def decrypt_dtc_code(code):
         else:
             raise tc
 
-        dig1 = str(obd_sensors.hex_to_int(current[0]) & 3)
-        dig2 = str(obd_sensors.hex_to_int(current[1]))
-        dig3 = str(obd_sensors.hex_to_int(current[2]))
-        dig4 = str(obd_sensors.hex_to_int(current[3]))
+        dig1 = str(sensors.hex_to_int(current[0]) & 3)
+        dig2 = str(sensors.hex_to_int(current[1]))
+        dig3 = str(sensors.hex_to_int(current[2]))
+        dig4 = str(sensors.hex_to_int(current[3]))
         dtc.append(type+dig1+dig2+dig3+dig4)
         current = current[4:]
     return dtc
@@ -222,14 +220,14 @@ class OBDPort:
      def sensor(self , sensor_index):
          """Returns 3-tuple of given sensors. 3-tuple consists of
          (Sensor Name (string), Sensor Value (string), Sensor Unit (string) ) """
-         sensor = obd_sensors.SENSORS[sensor_index]
+         sensor = SENSORS[sensor_index]
          r = self.get_sensor_value(sensor)
          return (sensor.name,r, sensor.unit)
 
      def sensor_names(self):
          """Internal use only: not a public interface"""
          names = []
-         for s in obd_sensors.SENSORS:
+         for s in SENSORS:
              names.append(s.name)
          return names
          
