@@ -42,7 +42,10 @@ def rpm(code):
     code = hex_to_int(code)
     return code / 4
 
-def speed(code):
+def speed_kmh(code):
+    return hex_to_int(code)
+
+def speed_mph(code):
     code = hex_to_int(code)
     return code / 1.609
 
@@ -147,7 +150,7 @@ SENSORS = [
     Sensor("fuel_pressure"         , "      Fuel Rail Pressure", "010A", cpass            ,""       ),
     Sensor("manifold_pressure"     , "Intake Manifold Pressure", "010B", intake_m_pres    ,"psi"    ),
     Sensor("rpm"                   , "              Engine RPM", "010C1", rpm              ,""       ),
-    Sensor("speed"                 , "           Vehicle Speed", "010D1", cpass           ,"km/h"    ),
+    Sensor("speed"                 , "           Vehicle Speed", "010D1", speed_kmh       ,"km/h"    ),
     Sensor("timing_advance"        , "          Timing Advance", "010E", timing_advance   ,"degrees"),
     Sensor("intake_air_temp"       , "         Intake Air Temp", "010F", temp             ,"C"      ),
     Sensor("maf"                   , "     Air Flow Rate (MAF)", "0110", maf              ,"lb/min" ),
