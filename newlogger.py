@@ -9,7 +9,7 @@ import obd.sensors
 from obd.utils import scan_serial
 
 class OBD_Recorder():
-    def __init__(self, path, log_items):
+    def __init__(self, path, log_items):    
         self.port = None
         self.sensorlist = []
         
@@ -22,17 +22,24 @@ class OBD_Recorder():
         for item in log_items:
             self.add_log_item(item)
 
-    def connect(self):
-        portnames = scan_serial()
-        portnames = ['COM8']
-        print portnames
-        for port in portnames:
-            self.port = obd.io.OBDPort(port, None, 2, 2)
+    def connect(self, portname = None):
+        if portname is None:
+            # Scan ports and try connecting
+            portnames = scan_serial()
+            print portnames
+            for port in portnames:
+                self.port = obd.io.OBDPort(port, None, 2, 2)
+                if(self.port.State == 0):
+                    self.port.close()
+                    self.port = None
+                else:
+                    break
+        else:
+            # Connect to the specified port
+            self.port = obd.io.OBDPort(portname, None, 2, 2)
             if(self.port.State == 0):
                 self.port.close()
                 self.port = None
-            else:
-                break
 
         if(self.port):
             print "Connected to "+self.port.port.name
@@ -71,9 +78,9 @@ class OBD_Recorder():
             time.sleep(0.2)
             
             
-logitems = ["rpm", "speed", "throttle_pos", "load", "temp", ]
+logitems = ["rpm", "speed", "throttle_pos", "load", "temp" ]
 o = OBD_Recorder('logs', logitems)
-o.connect()
+o.connect("COM8")
 if not o.is_connected():
     print "Not connected"
 o.record_data()
