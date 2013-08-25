@@ -57,8 +57,9 @@ class OBD_Recorder():
         print "Logging started"
         
         while 1:
-            localtime = datetime.now()
-            current_time = str(localtime.hour)+":"+str(localtime.minute)+":"+str(localtime.second)+"."+str(localtime.microsecond)
+            #localtime = datetime.now()
+            #current_time = str(localtime.hour)+":"+str(localtime.minute)+":"+str(localtime.second)+"."+str(localtime.microsecond)
+            current_time = str(datetime.utcnow())
             log_string = current_time
             results = {}
             for index in self.sensorlist:
