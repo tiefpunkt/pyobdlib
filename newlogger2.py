@@ -24,7 +24,7 @@ try:
     if port.State == 0:
         port.close()
         port = None
-        raise "Cannot connect to %s" % PORTNAME
+        raise Exception("Cannot connect to %s" % PORTNAME)
         
     # Logging
     print "Logging started"
