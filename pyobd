@@ -605,7 +605,7 @@ the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  0211
         diag = wx.Dialog(self.frame, id, title="Configure")
         sizer = wx.BoxSizer(wx.VERTICAL)
         
-        ports = scanSerial()
+        ports = scan_serial()
         rb = wx.RadioBox(diag, id, "Choose Serial Port",
                         choices = ports, style = wx.RA_SPECIFY_COLS,
                         majorDimension = 2)

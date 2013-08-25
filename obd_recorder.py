@@ -26,7 +26,7 @@ class OBD_Recorder():
 
     def connect(self):
         portnames = scan_serial()
-        #portnames = ['COM10']
+        portnames = ['COM8']
         print portnames
         for port in portnames:
             self.port = obd.io.OBDPort(port, None, 2, 2)
@@ -64,7 +64,7 @@ class OBD_Recorder():
             for index in self.sensorlist:
                 (name, value, unit) = self.port.sensor(index)
                 log_string = log_string + ","+str(value)
-                results[obd_sensors.SENSORS[index].shortname] = value;
+                results[obd.sensors.SENSORS[index].shortname] = value;
 
             gear = self.calculate_gear(results["rpm"], results["speed"])
             log_string = log_string + "," + str(gear)
@@ -92,7 +92,7 @@ class OBD_Recorder():
             
             
 logitems = ["rpm", "speed", "throttle_pos", "load"]
-o = OBD_Recorder('/home/pi/logs/', logitems)
+o = OBD_Recorder('logs', logitems)
 o.connect()
 if not o.is_connected():
     print "Not connected"

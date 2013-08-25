@@ -16,6 +16,7 @@ class OBD_Capture():
 
     def connect(self):
         portnames = scan_serial()
+        portnames = ['COM8']
         print portnames
         for port in portnames:
             self.port = obd.io.OBDPort(port, None, 2, 2)
@@ -44,9 +45,9 @@ class OBD_Capture():
         for i in range(0, len(self.supp)):
             if self.supp[i] == "1":
                 # store index of sensor and sensor object
-                self.supportedSensorList.append([i+1, obd_sensors.SENSORS[i+1]])
+                self.supportedSensorList.append([i+1, obd.sensors.SENSORS[i+1]])
             else:
-                self.unsupportedSensorList.append([i+1, obd_sensors.SENSORS[i+1]])
+                self.unsupportedSensorList.append([i+1, obd.sensors.SENSORS[i+1]])
         
         for supportedSensor in self.supportedSensorList:
             print "supported sensor index = " + str(supportedSensor[0]) + " " + str(supportedSensor[1].shortname)        

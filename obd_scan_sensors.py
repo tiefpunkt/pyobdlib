@@ -16,6 +16,7 @@ class OBD_Capture():
 
     def connect(self):
         portnames = scan_serial()
+		#portnames = ['COM6']
         print portnames
         for port in portnames:
             self.port = obd.io.OBDPort(port, None, 2, 2)
