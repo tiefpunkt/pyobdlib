@@ -35,22 +35,24 @@ try:
         results = {}
         results["timestamp"] = str(now_utc)
         for index in LOG_SENSORS:
-            (name, value, unit) = self.port.sensor(index)
+            (name, value, unit) = port.sensor(index)
             results[obd.sensors.SENSORS[index].shortname] = value;
 
-        tup = (results["timestamp"], 
-               results["speed"], 
-               results["rpm"], 
-               results["load"], 
-               results["throttle_pos"], 
-               results["temp"])
-
-        # Save row
-        c = conn.cursor()
-        c.execute("INSERT INTO Log (timestamp,speed,rpm,load,throttle,coolant) VALUES (?,?,?,?,?,?)", tup)
-        conn.commit()
+        # Only save if the engine is running (rpm > 0)
+        if results["rpm"] > 0:
+            tup = (results["timestamp"], 
+                   results["speed"], 
+                   results["rpm"], 
+                   results["load"], 
+                   results["throttle_pos"], 
+                   results["temp"])
+                   
+            # Save row
+            c = conn.cursor()
+            c.execute("INSERT INTO Log (timestamp,speed,rpm,load,throttle,coolant) VALUES (?,?,?,?,?,?)", tup)
+            conn.commit()
         
-        print tup
+            print tup
         
         # Sleep for a moment, as it is REALLY fast
         time.sleep(0.2)
