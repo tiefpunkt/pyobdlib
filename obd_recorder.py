@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import obd_io
+import obd.io
 import serial
 import platform
-import obd_sensors
+import obd.sensors
 from datetime import datetime
 import time
 
-from obd_utils import scanSerial
+from obd.utils import scanSerial
 
 class OBD_Recorder():
     def __init__(self, path, log_items):
@@ -29,7 +29,7 @@ class OBD_Recorder():
         #portnames = ['COM10']
         print portnames
         for port in portnames:
-            self.port = obd_io.OBDPort(port, None, 2, 2)
+            self.port = obd.io.OBDPort(port, None, 2, 2)
             if(self.port.State == 0):
                 self.port.close()
                 self.port = None
@@ -43,7 +43,7 @@ class OBD_Recorder():
         return self.port
         
     def add_log_item(self, item):
-        for index, e in enumerate(obd_sensors.SENSORS):
+        for index, e in enumerate(obd.sensors.SENSORS):
             if(item == e.shortname):
                 self.sensorlist.append(index)
                 print "Logging item: "+e.name

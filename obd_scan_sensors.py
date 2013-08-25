@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import obd_io
+import obd.io
 import serial
 import platform
-import obd_sensors
+import obd.sensors
 from datetime import datetime
 import time
 
-from obd_utils import scanSerial
+from obd.utils import scanSerial
 
 class OBD_Capture():
     def __init__(self):
@@ -18,7 +18,7 @@ class OBD_Capture():
         portnames = scanSerial()
         print portnames
         for port in portnames:
-            self.port = obd_io.OBDPort(port, None, 2, 2)
+            self.port = obd.io.OBDPort(port, None, 2, 2)
             if(self.port.State == 0):
                 self.port.close()
                 self.port = None
@@ -37,9 +37,9 @@ class OBD_Capture():
         # its a string of binary 01010101010101 
         # 1 means the sensor is supported
         self.supp = self.port.sensor(0)[1]
-	self.supp += self.port.sensor(32)[1]
-	self.supp += self.port.sensor(64)[1]
-	self.supp += self.port.sensor(96)[1]
+        self.supp += self.port.sensor(32)[1]
+        self.supp += self.port.sensor(64)[1]
+        self.supp += self.port.sensor(96)[1]
         self.supportedSensorList = []
         self.unsupportedSensorList = []
 
@@ -47,9 +47,9 @@ class OBD_Capture():
         for i in range(0, len(self.supp)):
             if self.supp[i] == "1":
                 # store index of sensor and sensor object
-                self.supportedSensorList.append([i+1, obd_sensors.SENSORS[i+1]])
+                self.supportedSensorList.append([i+1, obd.sensors.SENSORS[i+1]])
             else:
-                self.unsupportedSensorList.append([i+1, obd_sensors.SENSORS[i+1]])
+                self.unsupportedSensorList.append([i+1, obd.sensors.SENSORS[i+1]])
         
         for supportedSensor in self.supportedSensorList:
             print "supported sensor index = " + str(supportedSensor[0]) + " " + str(supportedSensor[1].shortname)        
