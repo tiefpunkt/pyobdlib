@@ -7,7 +7,7 @@ import obd.sensors
 from datetime import datetime
 import time
 
-from obd.utils import scanSerial
+from obd.utils import scan_serial
 
 class OBD_Recorder():
     def __init__(self, path, log_items):
@@ -25,7 +25,7 @@ class OBD_Recorder():
         #log_formatter = logging.Formatter('%(asctime)s.%(msecs).03d,%(message)s', "%H:%M:%S")
 
     def connect(self):
-        portnames = scanSerial()
+        portnames = scan_serial()
         #portnames = ['COM10']
         print portnames
         for port in portnames:

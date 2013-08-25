@@ -7,7 +7,7 @@ import obd.sensors
 from datetime import datetime
 import time
 
-from obd.utils import scanSerial
+from obd.utils import scan_serial
 
 class OBD_Capture():
     def __init__(self):
@@ -15,7 +15,7 @@ class OBD_Capture():
         localtime = time.localtime(time.time())
 
     def connect(self):
-        portnames = scanSerial()
+        portnames = scan_serial()
         print portnames
         for port in portnames:
             self.port = obd.io.OBDPort(port, None, 2, 2)

@@ -1,7 +1,7 @@
 import serial
 import platform
 
-def scanSerial():
+def scan_serial():
     """scan for available ports. return a list of serial names"""
     available = []
     for i in range(256):
