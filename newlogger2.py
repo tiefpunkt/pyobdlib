@@ -15,7 +15,7 @@ conn = sqlite3.connect('obdlog.db')
 try:
     c = conn.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS Log 
-                 (Timestamp TEXT, Speed REAL, RPM REAL, Load REAL, Throttle REAL, Coolant REAL)""")
+                 (id INTEGER PRIMARY KEY, timestamp TEXT, speed REAL, rpm REAL, load REAL, throttle REAL, coolant REAL)""")
     conn.commit()
     del c
     
@@ -47,7 +47,7 @@ try:
 
         # Save row
         c = conn.cursor()
-        c.execute("INSERT INTO Log VALUES (?,?,?,?,?,?)", tup)
+        c.execute("INSERT INTO Log (timestamp,speed,rpm,load,throttle,coolant) VALUES (?,?,?,?,?,?)", tup)
         conn.commit()
         
         print tup
