@@ -29,12 +29,11 @@ from math import ceil
 from datetime import datetime
 
 from .sensors import hex_to_int, SENSORS
+from .debug import debug_display
 
 GET_DTC_COMMAND   = "03"
 CLEAR_DTC_COMMAND = "04"
 GET_FREEZE_DTC_COMMAND = "07"
-
-from debugEvent import debug_display
 
 #__________________________________________________________________________
 def decrypt_dtc_code(code):
