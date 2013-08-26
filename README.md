@@ -1,19 +1,14 @@
-pyobd
-=====
+pyobdlib
+========
 
-dmham/pyobd
------------
+pyOBDlib is an attempt to take pyobd and convert it into a more usable library for creating OBD-related apps.
 
-Forked from https://github.com/martinohanlon/pyobd
+Licence and Attribution
+-----------------------
 
-Wanted to have a more complete sensor list.
+Licenced under the GPL.
 
-Will adjust the output for my own needs...
-
-markembling/pyobd
------------------
-
-Forked from https://github.com/dmham/pyobd.
-
-Converting pyobd into a more usable library with workable examples derived from upstream devs.
+ - Copyright 2004 Donour Sizemore (donour@uchicago.edu)
+ - Copyright 2009 Secons Ltd. (www.obdtester.com)
+ - Portions Copyright 2013 Mark Embling (contact@markembling.info)
 
