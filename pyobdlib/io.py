@@ -68,28 +68,26 @@ def decrypt_dtc_code(code):
 
 class OBDPort:
      """ OBDPort abstracts all communication with OBD-II device."""
-     def __init__(self,portnum,_notify_window,SERTIMEOUT,RECONNATTEMPTS):
+     def __init__(self, portnum, _notify_window, SERTIMEOUT, RECONNATTEMPTS):
          """Initializes port by resetting device and gettings supported PIDs. """
-         # These should really be set by the user.
-         baud     = 38400
-         databits = 8
-         par      = serial.PARITY_NONE  # parity
-         sb       = 1                   # stop bits
-         to       = SERTIMEOUT
          self.ELMver = "Unknown"
-         self.State = 1 #state SERIAL is 1 connected, 0 disconnected (connection failed)
+         self.state = 1 #state SERIAL is 1 connected, 0 disconnected (connection failed)
          self.port = None
          
          self._notify_window=_notify_window
          debug_display(self._notify_window, 1, "Opening interface (serial port)")
 
          try:
-             self.port = serial.Serial(portnum,baud, \
-             parity = par, stopbits = sb, bytesize = databits,timeout = to)
+             self.port = serial.Serial(portnum, 
+                                       38400,  # baud rate
+                                       parity = serial.PARITY_NONE, 
+                                       stopbits = 1, 
+                                       bytesize = 8,
+                                       timeout = SERTIMEOUT)
              
          except serial.SerialException as e:
              print e
-             self.State = 0
+             self.state = 0
              return None
              
          debug_display(self._notify_window, 1, "Interface successfully " + self.port.portstr + " opened")
@@ -99,12 +97,12 @@ class OBDPort:
             self.send_command("atz")   # initialize
             time.sleep(1)
          except serial.SerialException:
-            self.State = 0
+            self.state = 0
             return None
             
          self.ELMver = self.get_result()
          if(self.ELMver is None):
-            self.State = 0
+            self.state = 0
             return None
          
          debug_display(self._notify_window, 2, "atz response:" + self.ELMver)
@@ -114,7 +112,7 @@ class OBDPort:
          ready = self.get_result()
          
          if(ready is None):
-            self.State = 0
+            self.state = 0
             return None
             
          debug_display(self._notify_window, 2, "0100 response:" + ready)
@@ -123,7 +121,7 @@ class OBDPort:
      def close(self):
          """ Resets device and closes all associated filehandles"""
          
-         if (self.port!= None) and self.State==1:
+         if (self.port!= None) and self.state==1:
             self.send_command("atz")
             self.port.close()
          

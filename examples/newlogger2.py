@@ -27,7 +27,7 @@ try:
     
     # Set up OBD port
     port = pyobdlib.io.OBDPort(PORTNAME, None, 2, 2)
-    if port.State == 0:
+    if port.state == 0:
         port.close()
         port = None
         raise Exception("Cannot connect to %s" % PORTNAME)
