@@ -1,47 +1,69 @@
 # Conversions used in sensors module
 
 def noop(code):
-    #fixme
+    """Return the code with no conversion"""
     return code
 
 def to_int(str):
+    """Convert the code (hex string) into an integer"""
     #i = eval("0x" + str, {}, {})
     #return i
     return int(str, 16)
-
-def to_maf(code):
-    code = to_int(code)
-    return code * 0.00132276
-
-def to_throttle_pos(code):
-    code = to_int(code)
-    return code * 100.0 / 255.0
-
-def to_intake_m_pres(code): # in kPa
-    code = to_int(code)
-    return code / 0.14504
     
-def to_rpm(code):
-    code = to_int(code)
-    return code / 4
+def to_bitstring(str):
+    """Convert the given code into a bit string (8 digit binary)"""
+    bitstring = ""
+    for i in str:
+        # silly type safety, we don't want to eval random stuff
+        if type(i) == type(''): 
+            v = eval("0x%s" % i)
+            if v & 8 :
+                bitstring += '1'
+            else:
+                bitstring += '0'
+            if v & 4:
+                bitstring += '1'
+            else:
+                bitstring += '0'
+            if v & 2:
+                bitstring += '1'
+            else:
+                bitstring += '0'
+            if v & 1:
+                bitstring += '1'
+            else:
+                bitstring += '0'                
+    return bitstring
 
 def to_percent_scale(code):
-    code = to_int(code)
-    return code * 100.0 / 255.0
-
-def to_timing_advance(code):
-    code = to_int(code)
-    return (code - 128) / 2.0
+    """Convert the given code to a percentage"""
+    return to_int(code) * 100.0 / 255.0
 
 def to_temp_c(code):
-    code = to_int(code)
-    return code - 40 
+    """Convert the given code to a value in celsius"""
+    return to_int(code) - 40 
 
 def to_fuel_trim_percent(code):
-    code = to_int(code)
-    return (code - 128.0) * 100.0 / 128
+    """Convert the code to a percentage using the fuel trim calculation"""
+    return (to_int(code) - 128.0) * 100.0 / 128
 
-def dtc_decrypt(code):
+def to_kpa_gauge(code):
+    """Used for fuel pressure"""
+    return to_int(code) * 3;
+
+def to_rpm(code):
+    """Convert code to RPM"""
+    return to_int(code) / 4
+
+def to_timing_advance(code):
+    """Convert code to timing advance (in degrees relative to cyl #1)"""
+    return (to_int(code) - 128) / 2.0
+
+def to_maf_grams_sec(code):
+    """Return correct grams/sec reading for MAF"""
+    return to_int(code) / 100.0
+
+def dtc_decode(code):
     #first byte is byte after PID and without spaces
     num = to_int(code[:2]) #A byte
     res = []
@@ -72,37 +94,18 @@ def dtc_decrypt(code):
     
     return res
 
-def to_bitstring(str):
-    bitstring = ""
-    for i in str:
-        # silly type safety, we don't want to eval random stuff
-        if type(i) == type(''): 
-            v = eval("0x%s" % i)
-            if v & 8 :
-                bitstring += '1'
-            else:
-                bitstring += '0'
-            if v & 4:
-                bitstring += '1'
-            else:
-                bitstring += '0'
-            if v & 2:
-                bitstring += '1'
-            else:
-                bitstring += '0'
-            if v & 1:
-                bitstring += '1'
-            else:
-                bitstring += '0'                
-    return bitstring
 
+# Additional conversions that may be used in client code
 
+def kmh_to_mph(kmh):
+    """Converts a speed in km/h to MPH"""
+    return kmh / 1.609
 
+def kpa_to_psi(kpa):
+    """Convert a value in kPa to PSI"""
+    return kpa / 0.14504
 
+def grams_sec_to_lb_min(grams_sec):
+    """Convert a reading in grams/sec to lb/min"""
+    return grams_sec * 0.132277
 
-
-
-
-def speed_mph(code):
-    code = to_int(code)
-    return code / 1.609

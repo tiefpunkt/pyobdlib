@@ -32,25 +32,28 @@ class Sensor:
         self.value = value_func
         self.unit = unit
 
+# Sensor definitions. Note that not all units/conversions appear to be 
+# implemented. Those which are not will return the raw hex value.
+# More info: http://en.wikipedia.org/wiki/OBD-II_PIDs#Standard_PIDs
 SENSORS = [
     Sensor("0100", "pids",                    "Supported PIDs",           to_bitstring),    
-    Sensor("0101", "dtc_status",              "Status Since DTC Cleared", dtc_decrypt),    
+    Sensor("0101", "dtc_status",              "Status Since DTC Cleared", dtc_decode),    
     Sensor("0102", "dtc_ff",                  "DTC Causing Freeze Frame"),    
     Sensor("0103", "fuel_status",             "Fuel System Status"),
     Sensor("01041", "load",                    "Calculated Load Value",    to_percent_scale,     "%"),    
-    Sensor("0105", "temp",                    "Coolant Temperature",      to_temp_C,            "C"),
+    Sensor("0105", "temp",                    "Coolant Temperature",      to_temp_c,            "C"),
     Sensor("0106", "short_term_fuel_trim_1",  "Short Term Fuel Trim",     to_fuel_trim_percent, "%"),
     Sensor("0107", "long_term_fuel_trim_1",   "Long Term Fuel Trim",      to_fuel_trim_percent, "%"),
     Sensor("0108", "short_term_fuel_trim_2",  "Short Term Fuel Trim",     to_fuel_trim_percent, "%"),
     Sensor("0109", "long_term_fuel_trim_2",   "Long Term Fuel Trim",      to_fuel_trim_percent, "%"),
-    Sensor("010A", "fuel_pressure",           "Fuel Rail Pressure"),
-    Sensor("010B", "manifold_pressure",       "Intake Manifold Pressure", to_intake_m_pres,     "psi"),
+    Sensor("010A", "fuel_pressure",           "Fuel Rail Pressure",       to_kpa_gauge,         "kPa"),
+    Sensor("010B", "manifold_pressure",       "Intake Manifold Pressure", to_int,               "kPa"),
     Sensor("010C1", "rpm",                     "Engine RPM",               to_rpm,               "rpm"),
     Sensor("010D1", "speed",                   "Vehicle Speed",            to_int,               "km/h"),
     Sensor("010E", "timing_advance",          "Timing Advance",           to_timing_advance,    "degrees"),
     Sensor("010F", "intake_air_temp",         "Intake Air Temp",          to_temp_c,            "C"),
-    Sensor("0110", "maf",                     "Air Flow Rate (MAF)",      to_maf,               "lb/min" ),
-    Sensor("01111", "throttle_pos",            "Throttle Position",        to_throttle_pos,      "%"),
+    Sensor("0110", "maf",                     "Air Flow Rate (MAF)",      to_maf_grams_sec,     "grams/sec" ),
+    Sensor("01111", "throttle_pos",            "Throttle Position",        to_percent_scale,      "%"),
     Sensor("0112", "secondary_air_status",    "Secondary Air Status"),
     Sensor("0113", "o2_sensor_positions",     "Location of O2 sensors"),
     Sensor("0114", "o211",                    "O2 Sensor: 1 - 1",         to_fuel_trim_percent, "%"),
