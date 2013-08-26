@@ -28,7 +28,8 @@ import time
 from math import ceil
 from datetime import datetime
 
-from .sensors import hex_to_int, SENSORS
+from .sensors import SENSORS
+from .conversion import to_int
 from .debug import debug_display
 
 GET_DTC_COMMAND   = "03"
@@ -57,10 +58,10 @@ def decrypt_dtc_code(code):
         else:
             raise tc
 
-        dig1 = str(sensors.hex_to_int(current[0]) & 3)
-        dig2 = str(sensors.hex_to_int(current[1]))
-        dig3 = str(sensors.hex_to_int(current[2]))
-        dig4 = str(sensors.hex_to_int(current[3]))
+        dig1 = str(to_int(current[0]) & 3)
+        dig2 = str(to_int(current[1]))
+        dig3 = strto_int(current[2]))
+        dig4 = str(to_int(current[3]))
         dtc.append(type+dig1+dig2+dig3+dig4)
         current = current[4:]
     return dtc
@@ -267,8 +268,8 @@ class OBDDevice:
             res = self.get_result()
             print "DTC result:" + res
             for i in range(0, 3):
-                val1 = hex_to_int(res[3+i*6:5+i*6])
-                val2 = hex_to_int(res[6+i*6:8+i*6]) #get DTC codes from response (3 DTC each 2 bytes)
+                val1 = to_int(res[3+i*6:5+i*6])
+                val2 = to_int(res[6+i*6:8+i*6]) #get DTC codes from response (3 DTC each 2 bytes)
                 val  = (val1<<8)+val2 #DTC val as int
                 
                 if val==0: #skip fill of last packet
@@ -287,8 +288,8 @@ class OBDDevice:
           
           print "DTC freeze result:" + res
           for i in range(0, 3):
-              val1 = hex_to_int(res[3+i*6:5+i*6])
-              val2 = hex_to_int(res[6+i*6:8+i*6]) #get DTC codes from response (3 DTC each 2 bytes)
+              val1 = to_int(res[3+i*6:5+i*6])
+              val2 = to_int(res[6+i*6:8+i*6]) #get DTC codes from response (3 DTC each 2 bytes)
               val  = (val1<<8)+val2 #DTC val as int
                 
               if val==0: #skip fill of last packet
