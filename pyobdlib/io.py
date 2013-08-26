@@ -60,7 +60,7 @@ def decrypt_dtc_code(code):
 
         dig1 = str(to_int(current[0]) & 3)
         dig2 = str(to_int(current[1]))
-        dig3 = strto_int(current[2]))
+        dig3 = str(to_int(current[2]))
         dig4 = str(to_int(current[3]))
         dtc.append(type+dig1+dig2+dig3+dig4)
         current = current[4:]
