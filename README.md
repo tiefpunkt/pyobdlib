@@ -6,7 +6,7 @@ pyOBDlib is an attempt to take pyobd and convert it into a more usable library f
 Licence and Attribution
 -----------------------
 
-Licenced under the GPL.
+Licenced under the GPL (v2).
 
  - Copyright 2004 Donour Sizemore (donour@uchicago.edu)
  - Copyright 2009 Secons Ltd. (www.obdtester.com)
