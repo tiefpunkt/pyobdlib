@@ -69,7 +69,7 @@ def decrypt_dtc_code(code):
 
 class OBDDevice:
      """OBDDevice abstracts all communication with OBD-II device."""
-     def __init__(self, portnum, _notify_window, SERTIMEOUT, RECONNATTEMPTS):
+     def __init__(self, serial_port, _notify_window, SERTIMEOUT, RECONNATTEMPTS):
          """Initializes port by resetting device and gettings supported PIDs. """
          self.ELMver = "Unknown"
          self.state = 1 #state SERIAL is 1 connected, 0 disconnected (connection failed)
@@ -79,7 +79,7 @@ class OBDDevice:
          debug_display(self._notify_window, 1, "Opening interface (serial port)")
 
          try:
-             self.port = serial.Serial(portnum, 
+             self.port = serial.Serial(serial_port, 
                                        38400,  # baud rate
                                        parity = serial.PARITY_NONE, 
                                        stopbits = 1, 
