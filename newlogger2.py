@@ -48,7 +48,7 @@ try:
             results[obd.sensors.SENSORS[index].shortname] = value;
 
         # Only save if the engine is running (rpm > 0)
-        if results["rpm"] > 0:
+        if results["rpm"] > 0 and results["rpm"] != "NODATA":
             tup = (results["timestamp"], 
                    results["speed"], 
                    results["rpm"], 
