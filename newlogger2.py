@@ -11,7 +11,6 @@ PORTNAME = "COM8"
 LOG_SENSORS = ["rpm", "speed", "throttle_pos", "load", "temp"]
 
 sensor_idxs = []
-
 conn = sqlite3.connect('obdlog.db')
 
 try:
@@ -28,9 +27,9 @@ try:
         port = None
         raise Exception("Cannot connect to %s" % PORTNAME)
 		
-    for xx in LOG_SENSORS:
+    for sensor_sname in LOG_SENSORS:
         for index, e in enumerate(obd.sensors.SENSORS):
-            if(xx == e.shortname):
+            if sensor_sname == e.shortname:
                 sensor_idxs.append(index)
                 print "Logging item: "+e.name
                 break
