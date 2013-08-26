@@ -23,15 +23,20 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ############################################################################
 
+import os, sys, inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+
 #import wxversion
 #wxversion.select("2.6")
 import wx
 
 import pyobdlib.io #OBD2 funcs
-import os #os.environ
+#import os #os.environ
 
 import threading
-import sys
+#import sys
 import serial
 import platform
 import time
