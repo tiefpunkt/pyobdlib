@@ -4,9 +4,9 @@ import platform
 from datetime import datetime
 import time
 import serial
-import obd.io
-import obd.sensors
-from obd.utils import scan_serial
+import pyobdlib.io
+import pyobdlib.sensors
+from pyobdlib.utils import scan_serial
 
 class OBD_Recorder():
     def __init__(self, path, log_items):    
@@ -28,7 +28,7 @@ class OBD_Recorder():
             portnames = scan_serial()
             print portnames
             for port in portnames:
-                self.port = obd.io.OBDPort(port, None, 2, 2)
+                self.port = pyobdlib.io.OBDPort(port, None, 2, 2)
                 if(self.port.State == 0):
                     self.port.close()
                     self.port = None
@@ -36,7 +36,7 @@ class OBD_Recorder():
                     break
         else:
             # Connect to the specified port
-            self.port = obd.io.OBDPort(portname, None, 2, 2)
+            self.port = pyobdlib.io.OBDPort(portname, None, 2, 2)
             if(self.port.State == 0):
                 self.port.close()
                 self.port = None
@@ -48,7 +48,7 @@ class OBD_Recorder():
         return self.port
         
     def add_log_item(self, item):
-        for index, e in enumerate(obd.sensors.SENSORS):
+        for index, e in enumerate(pyobdlib.sensors.SENSORS):
             if(item == e.shortname):
                 self.sensorlist.append(index)
                 print "Logging item: "+e.name
@@ -70,7 +70,7 @@ class OBD_Recorder():
             for index in self.sensorlist:
                 (name, value, unit) = self.port.sensor(index)
                 log_string = log_string + ","+str(value)
-                results[obd.sensors.SENSORS[index].shortname] = value;
+                results[pyobdlib.sensors.SENSORS[index].shortname] = value;
 
             self.log_file.write(log_string+"\n")
             

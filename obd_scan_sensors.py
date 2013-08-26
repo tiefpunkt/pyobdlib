@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-import obd.io
+import pyobdlib.io
 import serial
 import platform
-import obd.sensors
+import pyobdlib.sensors
 from datetime import datetime
 import time
 
-from obd.utils import scan_serial
+from pyobdlib.utils import scan_serial
 
 class OBD_Capture():
     def __init__(self):
@@ -19,7 +19,7 @@ class OBD_Capture():
 		#portnames = ['COM6']
         print portnames
         for port in portnames:
-            self.port = obd.io.OBDPort(port, None, 2, 2)
+            self.port = pyobdlib.io.OBDPort(port, None, 2, 2)
             if(self.port.State == 0):
                 self.port.close()
                 self.port = None
@@ -48,9 +48,9 @@ class OBD_Capture():
         for i in range(0, len(self.supp)):
             if self.supp[i] == "1":
                 # store index of sensor and sensor object
-                self.supportedSensorList.append([i+1, obd.sensors.SENSORS[i+1]])
+                self.supportedSensorList.append([i+1, pyobdlib.sensors.SENSORS[i+1]])
             else:
-                self.unsupportedSensorList.append([i+1, obd.sensors.SENSORS[i+1]])
+                self.unsupportedSensorList.append([i+1, pyobdlib.sensors.SENSORS[i+1]])
         
         for supportedSensor in self.supportedSensorList:
             print "supported sensor index = " + str(supportedSensor[0]) + " " + str(supportedSensor[1].shortname)        
