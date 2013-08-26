@@ -132,9 +132,9 @@ class MyApp(wx.App):
             threading.Thread.__init__ ( self )
         
         def initCommunication(self):
-            self.port     = pyobdlib.io.OBDPort(self.portName,self._notify_window,self.SERTIMEOUT,self.RECONNATTEMPTS)
+            self.port     = pyobdlib.io.OBDDevice(self.portName,self._notify_window,self.SERTIMEOUT,self.RECONNATTEMPTS)
             
-            if self.port.State==0: #Cant open serial port
+            if self.port.state==0: #Cant open serial port
                 return None
                 
             self.active   = []
@@ -157,7 +157,7 @@ class MyApp(wx.App):
         def run(self):
             wx.PostEvent(self._notify_window, StatusEvent([0,1,"Connecting...."]))
             self.initCommunication()
-            if self.port.State==0: #cant connect, exit thread
+            if self.port.state==0: #cant connect, exit thread
               self.stop()
               wx.PostEvent(self._notify_window, StatusEvent([666])) #signal apl, that communication was disconnected
               wx.PostEvent(self._notify_window, StatusEvent([0,1,"Error cant connect..."]))

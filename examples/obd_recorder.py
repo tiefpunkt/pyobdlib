@@ -32,7 +32,7 @@ class OBD_Recorder():
         portnames = ['COM8']
         print portnames
         for port in portnames:
-            self.port = pyobdlib.io.OBDPort(port, None, 2, 2)
+            self.port = pyobdlib.io.OBDDevice(port, None, 2, 2)
             if(self.port.state == 0):
                 self.port.close()
                 self.port = None

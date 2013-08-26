@@ -41,7 +41,7 @@ class OBD_Recorder():
                     break
         else:
             # Connect to the specified port
-            self.port = pyobdlib.io.OBDPort(portname, None, 2, 2)
+            self.port = pyobdlib.io.OBDDevice(portname, None, 2, 2)
             if(self.port.state == 0):
                 self.port.close()
                 self.port = None

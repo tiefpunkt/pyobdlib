@@ -26,7 +26,7 @@ try:
     del c
     
     # Set up OBD port
-    port = pyobdlib.io.OBDPort(PORTNAME, None, 2, 2)
+    port = pyobdlib.io.OBDDevice(PORTNAME, None, 2, 2)
     if port.state == 0:
         port.close()
         port = None

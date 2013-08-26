@@ -66,8 +66,8 @@ def decrypt_dtc_code(code):
     return dtc
 #__________________________________________________________________________
 
-class OBDPort:
-     """ OBDPort abstracts all communication with OBD-II device."""
+class OBDDevice:
+     """OBDDevice abstracts all communication with OBD-II device."""
      def __init__(self, portnum, _notify_window, SERTIMEOUT, RECONNATTEMPTS):
          """Initializes port by resetting device and gettings supported PIDs. """
          self.ELMver = "Unknown"
