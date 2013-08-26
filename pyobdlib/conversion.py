@@ -30,7 +30,7 @@ def to_int(str):
     return int(str, 16)
     
 def to_bitstring(str):
-    """Convert the given code into a bit string (8 digit binary)"""
+    """Convert the given code into a bit string (binary string, equiv. 4 bytes)"""
     bitstring = ""
     for i in str:
         # silly type safety, we don't want to eval random stuff
