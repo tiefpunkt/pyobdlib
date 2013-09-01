@@ -41,6 +41,9 @@ class OBD_Capture():
         # its a string of binary 01010101010101 
         # 1 means the sensor is supported
         self.supp = self.port.sensor(0)[1]
+        self.supp += self.port.sensor(32)[1]
+        self.supp += self.port.sensor(64)[1]
+        self.supp += self.port.sensor(96)[1]
         self.supportedSensorList = []
         self.unsupportedSensorList = []
 
