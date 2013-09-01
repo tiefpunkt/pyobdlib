@@ -72,7 +72,7 @@ def to_bitstring(str):
 
 def to_percent_scale(code):
     """Convert the given code to a percentage"""
-    return to_int(code) * 100.0 / 255.0
+    return round(to_int(code) * 100.0 / 255.0, 2)
 
 def to_temp_c(code):
     """Convert the given code to a value in celsius"""

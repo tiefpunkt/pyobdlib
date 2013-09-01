@@ -9,6 +9,7 @@ import platform
 import pyobdlib.sensors
 from datetime import datetime
 import time
+import json
 
 from pyobdlib.utils import scan_serial
 
@@ -69,7 +70,8 @@ class OBD_Capture():
                 localtime = datetime.now()
                 current_time = str(localtime.hour)+":"+str(localtime.minute)+":"+str(localtime.second)+"."+str(localtime.microsecond)
                 log_string = current_time + "\n"
-                results = {"timestamp": datetime.now(), "obd":{} }
+                
+                results = {"timestamp": str(datetime.now()), "obd":{} }
                 for supportedSensor in self.supportedSensorList:
                     sensorIndex = supportedSensor[0]
                     (name, value, unit) = self.port.sensor(sensorIndex)

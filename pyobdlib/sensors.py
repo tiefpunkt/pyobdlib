@@ -107,7 +107,7 @@ SENSORS = [
     Sensor("0149", "Accelerator_pedal_position_D", "Accelerator_pedal_positi", to_percent_scale,     "%"),
     Sensor("014A", "Accelerator_pedal_position_E", "Accelerator_pedal_positi", to_percent_scale,     "%"),
     Sensor("014B", "Accelerator_pedal_position_F", "Accelerator_pedal_positi", to_percent_scale,     "%"),
-    Sensor("014C", "Commanded_throttle_actuator", "Commanded_throttle_actuator", to_percent_scale,     "%"),
+    Sensor("014C", "Commanded_throttle_actuator", "Commanded_throttle_actuator"),
     Sensor("014D", "Time_run_with_MIL_on",    "Time_run_with_MIL_on",			to_int,               "secs"),
     Sensor("014E", "Time_since_trouble_code", "Time_since_trouble_codes"),
     Sensor("014F", "Maximum_value_for_equiv", "Maximum_value_for_equiva"),
