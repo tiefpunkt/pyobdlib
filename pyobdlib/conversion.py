@@ -17,6 +17,22 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+OBD_STANDARDS = {
+	"01": "OBD-II as defined by the CARB",
+	"02": "OBD as defined by the EPA",
+	"03": "OBD and OBD-II",
+	"04": "OBD-I",
+	"05": "Not meant to comply with any OBD standard",
+	"06": "EOBD (Europe)",
+	"07": "EOBD and OBD-II",
+	"08": "EOBD and OBD",
+	"09": "EOBD, OBD and OBD II",
+	"0A": "JOBD (Japan)",
+	"0B": "JOBD and OBD II",
+	"0C": "JOBD and EOBD",
+	"0D": "JOBD, EOBD, and OBD II"
+}
+
 # Conversions used in sensors module
 
 def noop(code):
@@ -112,6 +128,12 @@ def dtc_decode(code):
     res.append(((numD>>7)&0x01)) #EGR SystemC7  bit of different 
     
     return res
+
+def to_ODB_standard(code):
+	if code in OBD_STANDARDS:
+		return OBD_STANDARDS[code]
+	else:
+		return "Invalid reply"
 
 
 # Additional conversions that may be used in client code
