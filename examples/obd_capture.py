@@ -19,7 +19,7 @@ class OBD_Capture():
 
     def connect(self):
         portnames = scan_serial()
-        portnames = ['COM8']
+        #portnames = ['COM8']
         print portnames
         for port in portnames:
             self.port = pyobdlib.io.OBDDevice(port, None, 2, 2)
