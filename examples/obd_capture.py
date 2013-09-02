@@ -9,7 +9,6 @@ import platform
 import pyobdlib.sensors
 from datetime import datetime
 import time
-import json
 
 from pyobdlib.utils import scan_serial
 
@@ -70,18 +69,14 @@ class OBD_Capture():
                 localtime = datetime.now()
                 current_time = str(localtime.hour)+":"+str(localtime.minute)+":"+str(localtime.second)+"."+str(localtime.microsecond)
                 log_string = current_time + "\n"
+                results = {}
                 
-                results = {"timestamp": str(datetime.now()), "obd":{} }
                 for supportedSensor in self.supportedSensorList:
                     sensorIndex = supportedSensor[0]
                     (name, value, unit) = self.port.sensor(sensorIndex)
                     log_string += name + " = " + str(value) + " " + str(unit) + "\n"
-                    results["obd"][name] = value
-
+                    
                 print log_string,
-                f = open("output.json","a") ## file open in appending mode i.e 'a'
-                json.dump(results,f) ## writing the contain dat1  to new.txt
-                f.close()
                 time.sleep(5)
 
         except KeyboardInterrupt:
