@@ -70,14 +70,13 @@ class OBD_Capture():
                 current_time = str(localtime.hour)+":"+str(localtime.minute)+":"+str(localtime.second)+"."+str(localtime.microsecond)
                 log_string = current_time + "\n"
                 results = {}
-                
                 for supportedSensor in self.supportedSensorList:
                     sensorIndex = supportedSensor[0]
                     (name, value, unit) = self.port.sensor(sensorIndex)
                     log_string += name + " = " + str(value) + " " + str(unit) + "\n"
-                    
+
                 print log_string,
-                time.sleep(5)
+                time.sleep(0.5)
 
         except KeyboardInterrupt:
             self.port.close()
